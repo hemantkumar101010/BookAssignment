@@ -1,0 +1,50 @@
+﻿@model BookSellingApp.Models.Book
+
+@{
+    ViewData["Title"] = "UpdateBook";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">Update Details of a book from this page</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4 mx-auto">
+        <form asp-action="UpdateBooks" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Zoner" class="control-label"></label>
+                <input asp-for="Zoner" class="form-control" />
+                <span asp-validation-for="Zoner" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReleaseDate" class="control-label"></label>
+                <input asp-for="ReleaseDate" class="form-control" />
+                <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cost" class="control-label"></label>
+                <input asp-for="Cost" class="form-control" />
+                <span asp-validation-for="Cost" class="text-danger"></span>
+            </div>
+
+               <div class="form-group d-grid gap-2 col-12 mx-auto mb-2 mt-2">
+                <input type="submit" value="Save" class="btn btn-outline-primary " />
+            </div>
+            <div class="form-group d-grid gap-2 col-12 mx-auto">
+                    <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+               </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

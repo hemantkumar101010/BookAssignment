@@ -1,0 +1,22 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Book
+@{
+    ViewData["Title"] = "BookValidationView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-6 text-center mx-auto mt-5 pt-5">
+          <h1 class="text-danger">Warning!!!</h1>
+    <p>
+       " @Model.Name "  Book is already in the store! cann't add same book again....
+    </p>
+     <div class="form-group d-grid gap-2 col-12 mx-auto">
+                    <a asp-action="AddBook" class="btn btn-outline-secondary">Go back</a>
+     </div>
+    </div>
+</div>
