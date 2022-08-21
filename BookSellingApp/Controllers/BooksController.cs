@@ -1,27 +1,33 @@
 ﻿using BookSellingApp.Models;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace BookSellingApp.Controllers
 {
+
+    [Authorize(Policy = "readonlypolicy")]
+     
     public class BooksController : Controller
     {
+        public readonly IWebHostEnvironment _webHostEnvironment;
 
-        Uri baseAddress = new Uri("https://localhost:7242/api");
+        Uri baseAddress = new Uri("https://ebookstoreapi.azurewebsites.net");
         HttpClient client;
 
-        public BooksController()
+        public BooksController(IWebHostEnvironment webHostEnvironment)
         {
             client = new HttpClient();
             client.BaseAddress = baseAddress;
+            _webHostEnvironment = webHostEnvironment;
         }
 
          public static List<Book>? bookList = new List<Book>();
+        [AllowAnonymous]
         public ActionResult Index()
         {
             
-            HttpResponseMessage responseMessage =  client.GetAsync(baseAddress + "/books/GetBooks").Result;
+            HttpResponseMessage responseMessage =  client.GetAsync(baseAddress + "api/books/GetBooks").Result;
 
             if (responseMessage.IsSuccessStatusCode)
             {
@@ -34,10 +40,15 @@ namespace BookSellingApp.Controllers
         }
 
         public static List<Book>? cartList = new List<Book>();
+
+        public ActionResult Cartlist()
+        {
+            return View("AddToCart",cartList);
+        }
         public ActionResult AddToCart(int id)
         {
 
-            HttpResponseMessage responseMessage = client.GetAsync(baseAddress + "/books/GetBook/" + id.ToString()).Result;
+            HttpResponseMessage responseMessage = client.GetAsync(baseAddress + "api/books/GetBook/" + id.ToString()).Result;
             if (responseMessage.IsSuccessStatusCode)
             {
                 string data = responseMessage.Content.ReadAsStringAsync().Result;
@@ -54,12 +65,15 @@ namespace BookSellingApp.Controllers
             return View("AddToCart", cartList);
 
         }
-        public ActionResult RemoveFromCart(Book book)
+        public ActionResult RemoveFromCart(int id)
         {
+            var book=cartList.Where(e=>e.Id==id)
+                .FirstOrDefault();
             cartList.Remove(book);
             return View("AddToCart", cartList);
         }
         // GET: BooksController/Create
+        [Authorize(Policy = "writepolicy")]
         public ActionResult AddBook()
         {
             return View();
@@ -75,8 +89,15 @@ namespace BookSellingApp.Controllers
             {
                 return View("BookValidationView",book);
             }
-           
-            var postTask = client.PostAsJsonAsync<Book>(baseAddress + "/books/PostBook", book);
+            if(book.Image != null)
+            {
+                string folder = "Book/Images/";
+                folder += Guid.NewGuid().ToString() + "_" + book.Image.FileName;
+                book.ImageUrl = folder;
+                string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath,folder);
+                 book.Image.CopyToAsync(new FileStream(serverFolder, FileMode.Create)); 
+            }
+            var postTask = client.PostAsJsonAsync<Book>(baseAddress + "api/books/PostBook", book);
             postTask.Wait();
             var result = postTask.Result;
             if (result.IsSuccessStatusCode)
@@ -89,11 +110,12 @@ namespace BookSellingApp.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult SearchBook(string searchByNameOrZoner)
         {
             ViewData["BookInfo"] = searchByNameOrZoner;
             List<Book>? bookList = new List<Book>();
-            HttpResponseMessage responseMessage = client.GetAsync(baseAddress + $"/books/Search/{searchByNameOrZoner}").Result;
+            HttpResponseMessage responseMessage = client.GetAsync(baseAddress + $"api/books/Search/{searchByNameOrZoner}").Result;
             if (responseMessage.IsSuccessStatusCode)
             {
                 string data = responseMessage.Content.ReadAsStringAsync().Result;
@@ -106,7 +128,7 @@ namespace BookSellingApp.Controllers
         public ActionResult Details(int id)
         {
             Book? book = new Book();
-            HttpResponseMessage responseMessage = client.GetAsync(baseAddress + "/books/GetBook/" + id.ToString()).Result;
+            HttpResponseMessage responseMessage = client.GetAsync(baseAddress + "api/books/GetBook/" + id.ToString()).Result;
             if (responseMessage.IsSuccessStatusCode)
             {
                 string data = responseMessage.Content.ReadAsStringAsync().Result;
@@ -116,11 +138,13 @@ namespace BookSellingApp.Controllers
         }
 
         // GET: BooksController/Edit/5
+        [Authorize(Policy = "writepolicy")]
         [HttpGet]
         public ActionResult UpdateBooks(int id)
         {
             Book? book = new Book();
-            HttpResponseMessage responseMessage = client.GetAsync(baseAddress + "/books/GetBook/" + id.ToString()).Result;
+           
+            HttpResponseMessage responseMessage = client.GetAsync(baseAddress + "api/books/GetBook/" + id.ToString()).Result;
             if (responseMessage.IsSuccessStatusCode)
             {
                 string data = responseMessage.Content.ReadAsStringAsync().Result;
@@ -135,7 +159,21 @@ namespace BookSellingApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult UpdateBooks(Book book)
         {
-            var putTask = client.PutAsJsonAsync<Book>(baseAddress + "/books/PutBook/" + book.Id.ToString(), book);
+
+            var name = bookList.Where(b => b.Name == book.Name).FirstOrDefault();
+            if (name != null)
+            {
+                return View("BookValidationView", book);
+            }
+            if (book.Image != null)
+            {
+                string folder = "Book/Images/";
+                folder += Guid.NewGuid().ToString() + "_" + book.Image.FileName;
+                book.ImageUrl = folder;
+                string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+                book.Image.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+            }
+            var putTask = client.PutAsJsonAsync<Book>(baseAddress + "api/books/PutBook/" + book.Id.ToString(), book);
             putTask.Wait();
 
             var result = putTask.Result;
@@ -146,18 +184,12 @@ namespace BookSellingApp.Controllers
             return View(book);
         }
 
-
-        //// GET: BooksController/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
-
+        [Authorize(Policy = "writepolicy")]
         public ActionResult DeleteBook(int id)
         {
 
             //HTTP DELETE
-            var deleteTask = client.DeleteAsync(baseAddress + "/books/DeleteBook/" + id);
+            var deleteTask = client.DeleteAsync(baseAddress + "api/books/DeleteBook/" + id);
             deleteTask.Wait();
 
             var result = deleteTask.Result;

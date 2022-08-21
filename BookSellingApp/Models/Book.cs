@@ -19,6 +19,10 @@ namespace BookSellingApp.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime ReleaseDate { get; set; }
         public int Cost { get; set; }
+        [Display (Name="Uplode book image")]
+        [Required]
+        public IFormFile Image { get; set; }
+        public string ImageUrl { get; set; }
 
     }
 }

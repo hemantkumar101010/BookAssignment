@@ -15,7 +15,12 @@ namespace BookApi.Models
 
         [Column(TypeName = "Varchar(50)")]
         public string Zoner { get; set; }
+
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime ReleaseDate { get; set; }
         public int Cost { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

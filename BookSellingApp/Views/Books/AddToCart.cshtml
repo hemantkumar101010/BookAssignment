@@ -1,9 +1,7 @@
 ﻿@model IEnumerable<BookSellingApp.Models.Book>
 @{
     ViewData["Title"] = "AddToCart";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -14,27 +12,30 @@
 </div>
 <hr />
 
-
-<div class="row mx-auto justify-content-center">
+<div class="row mx-auto">
 @foreach(var item in Model){
 
-      <div class="col-lg-3 col-sm-12 d-grid justify-content-center">
+      <div class="col-lg-4 col-sm-12 col-md-6 d-grid  mb-3 justify-content-center">
 
-              <img  style="width: 18rem;" src="https://media.istockphoto.com/photos/stack-of-colorful-books-isolated-on-white-background-collection-of-picture-id1216658448?k=20&m=1216658448&s=612x612&w=0&h=hppCe-4-mf_YT5rM2VGUc3-FYT4CdIfcszUD5DWaRTo=" alt="Card image cap">
-    </div>
+              <img  style="width:280px;height:219px " src="/@item.ImageUrl" alt="Card image cap">
 
-    <div class="col-lg-3 col-sm-12">
-        <div class="card mx-auto"  style="width: 18rem;">
-          <div class="card-body">
-                 <h5 class="card-title">Book Name: @item.Name</h5>
-                      <h6 class="card-subtitle mb-2 text-muted">Total Cost: @item.Cost</h6>
-                       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                 <div class="form-group d-grid gap-2 col-12 mx-auto">
-                     <a href="https://pay.google.com/gp/w/u/0/home/signup?sctid=2212015362792637" class="btn btn-outline-secondary">Make Payment</a>
-                </div>
-         </div>
-       </div>
-    </div>
+               <div class="card mx-auto"  style="width: 280px; height:219px">
+                     <div class="card-body">
+                         <h5 class="card-title">Book Name: @item.Name</h5>
+                         <h6 class="card-subtitle mb-2 text-muted">Total Cost: @item.Cost</h6>
+                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                       
+                            <div class="row">
+                                <div class="col-6 ">
+                                     <a href="https://pay.google.com/gp/w/u/0/home/signup?sctid=2212015362792637" class="btn btn-outline-secondary btn-sm">Make Payment</a>
+                                </div>
+                                <div class="col-6">
+                                       <a  asp-action="RemoveFromCart" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm">Remove Cart</a>
+                                </div>
+                            </div>      
+                     </div>
+               </div>
+     </div>
     }
 </div>
 <div class="row mx-auto justify-content-center mt-5">

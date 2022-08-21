@@ -2,12 +2,11 @@
 using BookApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
 namespace BookApi.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class booksController : ControllerBase
+    public class booksController : ControllerBase 
     {
         private readonly BookDbContext _context;
 

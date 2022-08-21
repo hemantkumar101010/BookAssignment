@@ -1,5 +1,25 @@
+using BookSellingApp.Areas.Identity.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString = builder.Configuration.GetConnectionString("ApplicationUserContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationUserContextConnection' not found.");
+
+
+builder.Services.AddDbContext<ApplicationUserContext>(options =>
+    options.UseSqlServer(connectionString));
+
+
+builder.Services.AddIdentity<AppUsers,IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddDefaultUI().AddEntityFrameworkStores<ApplicationUserContext>();
+
+
+builder.Services.AddAuthorization(o => {
+    o.AddPolicy("readonlypolicy", builder => builder.RequireRole("Admin", "Clerk", "Manager", "User"));
+    o.AddPolicy("writepolicy", builder => builder.RequireRole("Admin", "Clerk"));
+
+});
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -17,11 +37,14 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();;
 
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Books}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapRazorPages();
 
 app.Run();

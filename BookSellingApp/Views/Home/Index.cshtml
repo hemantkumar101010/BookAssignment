@@ -3,6 +3,120 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4 mb-5 " >Welcome to online book store</h1>
+    
+</div>
+
+<form asp-controller="Books" asp-action="SearchBook" method="get">
+    <p>
+        <div class="row">
+            <div class="col-lg-6 col-sm-12 mx-auto">
+                 <input type="search" placeholder="Search book by name or zoner..." name="searchByNameOrZoner" value="@ViewData["BookInfo"]" class="form-control mb-2" />                               
+                 <input type="submit" value="search" class="btn w-100 btn-outline-dark" />
+             </div>  
+        </div>
+         <div class="row">
+            <div class="col-lg-6 col-sm-12  d-grid gap-2 col-12 mx-auto pt-1">
+
+                <a asp-controller="Books" asp-action="Index" class="btn w-100 btn-outline-primary">Book List</a>
+            </div>
+         </div>
+    </p>
+</form><br />
+
+<div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="3000">
+     
+      <div class="row">
+               <div class="col-lg-4 col-md-6 col-sm-12 col d-flex justify-content-center">
+                        <div class="card mb-4" style="width: 18rem;">
+                             <img class="card-img-top mx-auto d-block pt-4" style="width:250px; height:200px" src="/Book/Images/e5b98971-31af-4c17-b1cf-22ebbac14caf_JavaBook.jpg" alt="Card image cap">
+                             <div class="card-body">
+                              <h5 class="card-title">Java<p class="lead" >(Programming)</p></h5>
+                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                               
+                             </div>
+                         </div>  
+          
+               </div>     
+
+              
+           <div class="col-lg-4 col-md-6 col-sm-12 col d-flex justify-content-center">
+                        <div class="card mb-4" style="width: 18rem;">
+                             <img class="card-img-top mx-auto d-block pt-4" style="width:250px; height:200px" src="/Book/Images/2f0630b5-bd12-47ae-97f4-92e439240dd2_positive-thinking.jpg" alt="Card image cap">
+                             <div class="card-body">
+                              <h5 class="card-title">Positive thinking<p class="lead" >(Motivation)</p></h5>
+                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                               
+                             </div>
+                         </div>  
+          
+               </div>
+           <div class="col-lg-4 col-md-6 col-sm-12 col d-flex justify-content-center">
+                        <div class="card mb-4" style="width: 18rem;">
+                             <img class="card-img-top mx-auto d-block pt-4" style="width:250px; height:200px" src="/Book/Images/3bd7d0a1-c81c-45e0-b1ba-f88efe5366ef_children-bible.png" alt="Card image cap">
+                             <div class="card-body">
+                              <h5 class="card-title">Children bible<p class="lead" >(Novel)</p></h5>
+                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                               
+                             </div>
+                         </div>  
+          
+               </div>
+
+      </div>
+
+    </div>
+    <div class="carousel-item" data-bs-interval="2000">
+       <div class="row ">
+         <div class="col-lg-4 col-md-6 col-sm-12 col d-flex justify-content-center">
+                        <div class="card mb-4" style="width: 18rem;">
+                             <img class="card-img-top mx-auto d-block pt-4" style="width:250px; height:200px" src="/Book/Images/b20723c1-387a-43bb-b699-0bfe05d63bb8_lisa.jpg" alt="Card image cap">
+                             <div class="card-body">
+                              <h5 class="card-title">Lisa<p class="lead" >(Drama)</p></h5>
+                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                               
+                             </div>
+                         </div>  
+          
+               </div>     
+
+              
+           <div class="col-lg-4 col-md-6 col-sm-12 col d-flex justify-content-center">
+                        <div class="card mb-4" style="width: 18rem;">
+                             <img class="card-img-top mx-auto d-block pt-4" style="width:250px; height:200px" src="/Book/Images/7439f65b-a142-4ec4-b76e-9299456c5602_The-Hidden-Hindu-Akshat-Gupta-Book.jpg" alt="Card image cap">
+                             <div class="card-body">
+                              <h5 class="card-title">Hiddden hindus<p class="lead" >(Romentic)</p></h5>
+                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                               
+                             </div>
+                         </div>  
+          
+               </div>
+           <div class="col-lg-4 col-md-6 col-sm-12 col d-flex justify-content-center">
+                        <div class="card mb-4" style="width: 18rem;">
+                             <img class="card-img-top mx-auto d-block pt-4" style="width:250px; height:200px" src="/Book/Images/c8f0c1b2-875b-4a2b-8ff0-bd7972ebb9df_harry-portaer.jpg" alt="Card image cap">
+                             <div class="card-body">
+                              <h5 class="card-title">Harry potter<p class="lead" >(Fiction)</p></h5>
+                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                               
+                             </div>
+                         </div>  
+          
+               </div>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+<div>
+   <p class=" display-6 mb-5 text-danger text-center">Register/Login yourself for more!</p>
 </div>

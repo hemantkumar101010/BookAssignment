@@ -11,8 +11,10 @@
 <body style="background-color: #edf2f8">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow mb-3">
+
             <div class="container-fluid">
-                <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index" >BookSellingApp</a>
+                <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">BookSellingApp</a>
+
                 <button class="navbar-toggler btn btn-close-white dropdownmenu.dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,13 +22,25 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Books" asp-action="Index">Home</a>
+
+                            <a class="nav-link text-white px-1" asp-area="" asp-controller="Home" asp-action="Index"><img style="width:27px;height:27px;" src="https://cdn-icons-png.flaticon.com/512/1057/1057118.png" /></a>
                         </li>
+                        @* <li class="nav-item">
+                        <a class="nav-link text-white" asp-area="" asp-controller="Books" asp-action="Index">Privacy</a>
+                        </li>*@
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Books" asp-action="Index">Privacy</a>
+                            <a class="nav-link text-white px-lg-3 px-1" asp-area="" asp-controller="Books" asp-action="CartList"><img style="width:27px;height:27px;" src="https://cdn-icons-png.flaticon.com/512/8181/8181590.png" /></a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white px-lg-2 px-1" asp-area="" asp-controller="Role" asp-action="Index"><img style="width:28px;height:28px;" src="https://cdn-icons-png.flaticon.com/512/7883/7883141.png" /></a>
+                        </li>
+
                     </ul>
+
+                    <partial name="_LoginPartial" />
                 </div>
+
             </div>
         </nav>
     </header>
@@ -36,9 +50,9 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted bg-dark">
+    <footer class="border-top footer text-muted bg-white">
         <div class="container text-center">
-            &copy; 2022 - BookSellingApp - <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-white-50">Privacy</a>
+            &copy; 2022 - BookSellingApp <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-white-50">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

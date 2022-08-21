@@ -18,7 +18,7 @@ namespace BookApi.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=LAPTOP-QM194TV4\SQLEXPRESS;Database=BookSellingDb;Trusted_Connection=True");
+            optionsBuilder.UseSqlServer(@"Server=tcp:bookapidbserver.database.windows.net,1433;Initial Catalog=BookApi_db;Persist Security Info=False;User ID=hemant;Password=01364261213@Hemu;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
 
 
         }

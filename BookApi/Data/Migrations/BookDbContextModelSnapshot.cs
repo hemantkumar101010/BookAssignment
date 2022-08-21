@@ -33,6 +33,10 @@ namespace BookApi.Data.Migrations
                     b.Property<int>("Cost")
                         .HasColumnType("int");
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("Varchar(50)");
